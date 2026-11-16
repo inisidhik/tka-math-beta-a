@@ -81,7 +81,7 @@ function App(){
     if(typeof item.subject!=='string'||!item.subject.trim())throw new Error(`Materi soal nomor ${i+1} belum diisi.`);
     if(!Array.isArray(item.options)||!Array.isArray(item.answer)||item.answer.length===0)throw new Error(`Opsi atau kunci soal nomor ${i+1} tidak valid.`);
     if(existingIds.has(String(item.id))){skipped++;continue;}
-    const options=item.options.map((opt:any,j:number)=>({id:String(opt?.id??j),text:String(opt?.text??'')}));
+    const options:Question['options']=item.options.map((opt:any,j:number)=>({id:String(opt?.id??j),text:String(opt?.text??'')}));
     if(item.type==='mcq'&&(options.length<2||item.answer.length!==1))throw new Error(`Soal PG nomor ${i+1} harus memiliki minimal dua opsi dan satu kunci.`);
     if(item.type==='mcma'&&(options.length<2||item.answer.length<1))throw new Error(`Soal PG kompleks nomor ${i+1} harus memiliki opsi dan minimal satu kunci.`);
     if(item.type==='tf'&&(options.length<2||item.answer.length!==options.length||item.answer.some((v:any)=>v!=='true'&&v!=='false')))throw new Error(`Soal Benar/Salah nomor ${i+1} harus memiliki satu kunci true/false untuk setiap pernyataan.`);
